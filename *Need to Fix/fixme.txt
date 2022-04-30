@@ -1,0 +1,4 @@
+#customers/views/ customer_detail_hx_view
+#    AttributeError: 'WSGIRequest' object has no attribute 'htmx' when #if not request.htmx: uncommented
+
+Active - boolean field type
