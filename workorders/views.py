@@ -9,6 +9,7 @@ from django.http.response import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import Workorder, WorkorderService, WorkorderInventoryProduct, WorkorderNonInventoryProduct
+from customers.models import Customer, Contact
 from .forms import WorkorderForm, WorkorderServiceForm, WorkorderInventoryForm, WorkorderNonInventoryForm
 from .forms import WorkorderDynamicForm
 
@@ -210,11 +211,46 @@ def workorder_noninventory_update_hx_view(request, parent_id= None, id=None):
 
 ##Attempt at HTMX Dropdown
 def customer(request):
-    form = WorkorderDynamicForm()
-    context = {'form': form}
-    return render(request, 'workorders/dynamiccustomer.html', context)
+    customers = Customer.objects.all()
+    context = {'customers': customers}
+    return render(request, 'workorders/customform.html', context)
+
+#def customer(request):
+#    form = WorkorderDynamicForm()
+#    context = {'form': form}
+#    return render(request, 'workorders/dynamiccustomer.html', context)
+
+#def contacts(request):
+#    form = WorkorderDynamicForm(request.GET)
+#    #print(form['contact'])
+#    return HttpResponse(form['contact'])
+
+def custom_workorder_create(request):
+    #print(request.POST)
+    context = {}
+    if request.method == "POST":
+        customer = request.POST.get("customer")
+        contact = request.POST.get("contact")
+        workorder = request.POST.get("workorder")
+        description = request.POST.get("description")
+        deadline = request.POST.get("deadline")
+        budget = request.POST.get("budget")
+        quoted_price = request.POST.get("quoted_price")
+        Workorder.objects.create(customer_id=customer, contact=contact, workorder=workorder, description=description, deadline=deadline, budget=budget, quoted_price=quoted_price)
+        context['workorder'] = workorder #return workorder number to form
+        context['created'] = True
+    return render(request, "workorders/customform.html", context=context)
 
 def contacts(request):
-    form = WorkorderDynamicForm(request.GET)
-    #print(form['contact'])
-    return HttpResponse(form['contact'])
+    print('Hello')
+    customer = request.GET.get('customer')
+    contacts = Contact.objects.filter(customer=customer)
+    context = {'contacts': contacts}
+    print(customer)
+    print(contacts)
+    return render(request, 'workorders/partials/customcontact.html', context)
+
+def customer(request):
+    customers = Customer.objects.all()
+    context = {'customers': customers}
+    return render(request, 'workorders/customform.html', context)

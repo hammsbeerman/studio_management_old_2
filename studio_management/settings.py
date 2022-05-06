@@ -52,6 +52,7 @@ LOCAL_APPS = [
     'userprofile',
     'vendors',
     'workorders',
+    'scratch',
 ]
 
 INSTALLED_APPS = DEFAULT_APPS + LOCAL_APPS + THIRD_PARTY_APPS

@@ -17,21 +17,21 @@
 
 
 <div style='margin-top:30px;'>
-
+<!--
     {{ form.customer.label_tag }}
-        {% render_field form.customer class="custom-select mb-4" autocomplete="off" hx-get="/workorders/contact/" hx-target="#id_contact" %}
+        {% render_field form.customer class="custom-select mb-4" autocomplete="off" hx-get="/scratch/contact/" hx-target="#id_contact" %}
 
-       <!-- {{ form.contact.label_tag }}
+        {{ form.contact.label_tag }}
         {% render_field form.contact class="custom-select mb-4" autocomplete="off" %} -->
 
-    {% include 'workorders/partials/forms.html' %}
+    {% include 'scratch/partials/forms.html' %}
     <p>
     <p>
     {% if titles %}
         <!-- Add Services-->
         <h3>Services:</h3>
         {% for item in object.get_services_children %}
-            {% include 'workorders/partials/service-inline.html' with object=item %}
+            {% include 'scratch/partials/service-inline.html' with object=item %}
         {% endfor %}
         {% if new_service_url %}
         <div id='service-create'>

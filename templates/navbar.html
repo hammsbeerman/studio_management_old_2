@@ -84,7 +84,17 @@
             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <li><a class="dropdown-item" href="{% url 'workorders:create' %}">Add Workorder</a></li>
               <li><a class="dropdown-item" href="{% url 'workorders:list' %}">Workorder List</a></li>
-              <li><a class="dropdown-item" href="{% url 'workorders:dynamic' %}">Dynamic Customer</a></li>
+              
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Scratch Area
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" href="{% url 'scratch:dynamic' %}">Dynamic Customer</a></li>
+              <li><a class="dropdown-item" href="{% url 'scratch:create' %}">Add Workorder</a></li>
+              <li><a class="dropdown-item" href="{% url 'scratch:custom' %}">Custom Form</a></li>
             </ul>
           </li>
         </ul>
