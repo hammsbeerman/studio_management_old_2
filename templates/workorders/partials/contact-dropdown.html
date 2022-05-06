@@ -1,5 +1,5 @@
 <select class="custom-select mb-4" name='contact'>
-    <option selected>Contact</option>
+    <option value="0" selected>Contact</option>
     {% for contact in contacts %}
         <option value="{{contact.pk}}">{{ contact.fname }} {{contact.lname}}</option>
     {% endfor %}

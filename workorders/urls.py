@@ -2,31 +2,26 @@ from django.urls import path
 
 from .views import (
     workorder_list_view,
-    workorder_create_view,
+    #workorder_create_view,
     workorder_detail_view,
     workorder_detail_hx_view,
     workorder_update_view,
     workorder_inventory_update_hx_view,
     workorder_noninventory_update_hx_view,
     workorder_service_update_hx_view,
-    customer,
+    create_base,
     contacts,
-    custom_workorder_create,
+    #custom_workorder_create,
     
 )
 
 app_name='workorders'
 urlpatterns = [
-    path("", workorder_list_view, name='list'),
-    #path("dynamic/", customer, name='dynamic'),
-    #path("contact/", contacts, name='contact'),
-
-    path("dynamic/", customer, name='dynamic'),
-    #path("contact/", contacts, name='contact'),
-    path("custom/", custom_workorder_create, name='custom'),
-    path('contacts/', contacts, name='contacts'),
-
-    path("create/", workorder_create_view, name='create'),
+    path("", workorder_list_view, name='list'), #List All workorders
+    path("createbase/", create_base, name='createbase'), #Create base details of new workorder
+    path('contacts/', contacts, name='contacts'), #Fills the contact dropdown on createbase/
+    #path("custom/", custom_workorder_create, name='custom'), #Calls save method for createbase/
+    #path("create/", workorder_create_view, name='create'), #Should be obsolete, replaced by createbase/
     path("hx/<str:parent_id>/inventory/", workorder_inventory_update_hx_view, name='hx-inventory-create'),
     path("hx/<str:parent_id>/inventory/<int:id>/", workorder_inventory_update_hx_view, name='hx-workorder-inventory-detail'),
     path("hx/<str:parent_id>/noninventory/", workorder_noninventory_update_hx_view, name='hx-noninventory-create'),

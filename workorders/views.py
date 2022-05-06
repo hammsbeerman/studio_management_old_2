@@ -11,10 +11,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Workorder, WorkorderService, WorkorderInventoryProduct, WorkorderNonInventoryProduct
 from customers.models import Customer, Contact
 from .forms import WorkorderForm, WorkorderServiceForm, WorkorderInventoryForm, WorkorderNonInventoryForm
-from .forms import WorkorderDynamicForm
+#from .forms import WorkorderDynamicForm
 
 # Create your views here.
-#@login_required
+"""#@login_required
 def workorder_create_view(request):
     form = WorkorderForm(request.POST or None)
     context = {
@@ -31,6 +31,7 @@ def workorder_create_view(request):
             return HttpResponse("Created", headers=headers)
         return redirect(obj.get_absolute_url())
     return render(request, "workorders/add-update.html", context)
+"""
 
 #@login_required
 def workorder_list_view(request):
@@ -213,7 +214,7 @@ def workorder_noninventory_update_hx_view(request, parent_id= None, id=None):
 def customer(request):
     customers = Customer.objects.all()
     context = {'customers': customers}
-    return render(request, 'workorders/customform.html', context)
+    return render(request, 'workorders/create-workorder.html', context)
 
 #def customer(request):
 #    form = WorkorderDynamicForm()
@@ -225,9 +226,13 @@ def customer(request):
 #    #print(form['contact'])
 #    return HttpResponse(form['contact'])
 
-def custom_workorder_create(request):
-    #print(request.POST)
+def create_base(request):
     context = {}
+    if request.method == "GET":
+        customers = Customer.objects.all()
+        context = {'customers': customers}
+        return render(request, 'workorders/create-workorder.html', context)
+    #print(request.POST)
     if request.method == "POST":
         customer = request.POST.get("customer")
         contact = request.POST.get("contact")
@@ -236,21 +241,32 @@ def custom_workorder_create(request):
         deadline = request.POST.get("deadline")
         budget = request.POST.get("budget")
         quoted_price = request.POST.get("quoted_price")
-        Workorder.objects.create(customer_id=customer, contact=contact, workorder=workorder, description=description, deadline=deadline, budget=budget, quoted_price=quoted_price)
+        if customer == "0":
+            customers = Customer.objects.all()
+            context = {'customers': customers}
+            context['error'] = 'Please select a customer'
+            return render(request, 'workorders/create-workorder.html', context)
+        if not workorder:
+            customers = Customer.objects.all()
+            context = {'customers': customers}
+            context['workordererror'] = 'Please enter a workorder'
+            return render(request, 'workorders/create-workorder.html', context)
+        #if contact == 0: -- Contacts are optional at this point
+        #    context['error']
+        #    return render(request, 'workorders/create-workorder.html', context)   
+        obj = Workorder.objects.create(customer_id=customer, contact_id=contact, workorder=workorder, description=description, deadline=deadline, budget=budget, quoted_price=quoted_price)
         context['workorder'] = workorder #return workorder number to form
         context['created'] = True
-    return render(request, "workorders/customform.html", context=context)
+        return redirect(obj.get_edit_url())
+    return render(request, "workorders/create-workorder.html", context=context)
 
 def contacts(request):
-    print('Hello')
     customer = request.GET.get('customer')
     contacts = Contact.objects.filter(customer=customer)
     context = {'contacts': contacts}
-    print(customer)
-    print(contacts)
-    return render(request, 'workorders/partials/customcontact.html', context)
+    return render(request, 'workorders/partials/contact-dropdown.html', context)
 
-def customer(request):
-    customers = Customer.objects.all()
-    context = {'customers': customers}
-    return render(request, 'workorders/customform.html', context)
+#def create_base(request):
+#    customers = Customer.objects.all()
+#    context = {'customers': customers}
+#    return render(request, 'workorders/create-workorder.html', context)

@@ -1,5 +1,7 @@
 <h1>{{ object.workorder }}</h1>{% if object.get_edit_url %}<small><a href='{{ object.get_edit_url }}'>Edit</a></small><br/>{% endif %}
-Customer: {{ object.customer}}
+Customer: {{ object.customer }}<br/>
+Contact: {{ object.contact }}
+
 <p>Description: {{ object.description}}<br/>
 Deadline: {{ object.deadline}}<br />
 Budget: {% if object.budget %}{{ object.budget}}{% endif %}<br />

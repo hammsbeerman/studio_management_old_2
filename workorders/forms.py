@@ -5,7 +5,7 @@ from customers.models import Customer, Contact
 from dynamic_forms import DynamicField, DynamicFormMixin
 
 ##Attempt at HTMX Dropdown
-class WorkorderDynamicForm(DynamicFormMixin, forms.Form):
+"""class WorkorderDynamicForm(DynamicFormMixin, forms.Form):
 
     def contact_choices(form):
         customer = form['customer'].value()
@@ -25,7 +25,7 @@ class WorkorderDynamicForm(DynamicFormMixin, forms.Form):
         queryset=contact_choices,
         initial=initial_contact
     )
-
+"""
 class WorkorderForm(DynamicFormMixin, forms.ModelForm):
     required_css_class = 'required-field'
     #Attempt at Dynamic Form
@@ -37,16 +37,17 @@ class WorkorderForm(DynamicFormMixin, forms.ModelForm):
         customer = form['customer'].value()
         return Contact.objects.filter(customer=customer).first()
 
-    customer = forms.ModelChoiceField(
+    """customer = forms.ModelChoiceField(
         queryset=Customer.objects.all(),
         initial=Customer.objects.first()
     )
-
+    
     contact = DynamicField(
         forms.ModelChoiceField,
         queryset=contact_choices,
         initial=initial_contact
-    )
+    )"""
+
     #########################################
     #name = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Customer name"}))
     #customer = forms.CharField(widget=forms.TextInput(), label=mark_safe('Customer - (<a href="/customers/create/" target="_blank">Add Customer</a>)'))
