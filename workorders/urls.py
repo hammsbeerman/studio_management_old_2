@@ -11,6 +11,7 @@ from .views import (
     workorder_service_update_hx_view,
     create_base,
     contacts,
+    update_contact,
     #custom_workorder_create,
     
 )
@@ -20,6 +21,7 @@ urlpatterns = [
     path("", workorder_list_view, name='list'), #List All workorders
     path("createbase/", create_base, name='createbase'), #Create base details of new workorder
     path('contacts/', contacts, name='contacts'), #Fills the contact dropdown on createbase/
+    path('updatecontact/', update_contact, name='update-contact'), ####
     #path("custom/", custom_workorder_create, name='custom'), #Calls save method for createbase/
     #path("create/", workorder_create_view, name='create'), #Should be obsolete, replaced by createbase/
     path("hx/<str:parent_id>/inventory/", workorder_inventory_update_hx_view, name='hx-inventory-create'),

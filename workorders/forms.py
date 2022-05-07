@@ -29,7 +29,7 @@ from dynamic_forms import DynamicField, DynamicFormMixin
 class WorkorderForm(DynamicFormMixin, forms.ModelForm):
     required_css_class = 'required-field'
     #Attempt at Dynamic Form
-    def contact_choices(form):
+    """def contact_choices(form):
         customer = form['customer'].value()
         return Contact.objects.filter(customer=customer)
 
@@ -37,7 +37,7 @@ class WorkorderForm(DynamicFormMixin, forms.ModelForm):
         customer = form['customer'].value()
         return Contact.objects.filter(customer=customer).first()
 
-    """customer = forms.ModelChoiceField(
+    customer = forms.ModelChoiceField(
         queryset=Customer.objects.all(),
         initial=Customer.objects.first()
     )
@@ -73,6 +73,7 @@ class WorkorderForm(DynamicFormMixin, forms.ModelForm):
             )
         self.fields['description'].widget.attrs.update({'rows': '2'})
         #self.fields['directions'].widget.attrs.update({'rows': '4'})
+        self.fields['contact'].label = ''
 
 class WorkorderServiceForm(forms.ModelForm):
     class Meta:

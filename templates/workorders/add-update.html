@@ -13,14 +13,15 @@
 </style>
 
 <h1>Add / Update Workorder</h1> 
-<br/><a href='{{ object.get_absolute_url }}'>Back to Details</a></small><br/>
-
+<p>
+<h3>Customer: {{ object.customer }}</h3>
+<a href='{{ object.get_absolute_url }}'>Back to Details</a></small><br/>
 
 <div style='margin-top:30px;'>
 
-    {{ form.customer.label_tag }}
+    <!-- {{ form.customer.label_tag }}
         {% render_field form.customer class="custom-select mb-4" autocomplete="off" hx-get="/workorders/contact/" hx-target="#id_contact" %}
-
+    -->
        <!-- {{ form.contact.label_tag }}
         {% render_field form.contact class="custom-select mb-4" autocomplete="off" %} -->
 

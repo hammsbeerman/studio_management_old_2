@@ -90,7 +90,7 @@ def workorder_update_view(request, id=None):
     #if all([form.is_valid(), formset.is_valid()]):
         parent = form.save(commit=False)
         parent.save()
-        context['message'] = 'Data saved.'
+        context['message'] = ''
     if request.htmx:
         return render(request, "workorders/partials/forms.html", context)
     return render(request, "workorders/add-update.html", context)
@@ -270,3 +270,10 @@ def contacts(request):
 #    customers = Customer.objects.all()
 #    context = {'customers': customers}
 #    return render(request, 'workorders/create-workorder.html', context)
+
+def update_contact(request):
+    customer = request.GET.get('customer')
+    print(customer)
+    contacts = Contact.objects.filter(customer=customer)
+    context = {'contacts': contacts}
+    return render(request, 'workorders/partials/contact-update.html', context)
