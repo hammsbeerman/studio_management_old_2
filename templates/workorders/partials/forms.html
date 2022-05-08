@@ -9,7 +9,7 @@
         {% endif %}
         
         <div name='contact_load' >
-           <input type="hidden" id="customer" name="customer" value="{{ object.customer_id }}" hx-get="{% url 'workorders:update-contact' %}" hx-trigger="load" hx-target="#id_contact">
+           <input type="hidden" id="customer" name="customer" value="{{ object.customer_id }}" hx-get="{% url 'workorders:update-contact' %}?contact={{ object.contact_id }}" hx-trigger="load" hx-target="#id_contact">
         </div>
         
         Current Contact: {{ object.contact }}

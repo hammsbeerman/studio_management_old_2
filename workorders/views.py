@@ -273,7 +273,24 @@ def contacts(request):
 
 def update_contact(request):
     customer = request.GET.get('customer')
-    print(customer)
+    currentcontact = request.GET.get('contact')
     contacts = Contact.objects.filter(customer=customer)
-    context = {'contacts': contacts}
+    if currentcontact != 'None':
+        currentcontact = Contact.objects.filter(id=currentcontact)
+    if currentcontact == 'None':
+        currentcontact = '0'
+    context = {
+        'contacts': contacts,
+        'currentcontact': currentcontact
+    }
+    #print(contacts)
+    #print(currentcontact)
     return render(request, 'workorders/partials/contact-update.html', context)
+
+#def update_contact(request):
+#    customer = request.GET.get('customer')
+#    print(customer)
+#    contacts = Contact.objects.filter(customer=customer)
+#
+#    context = {'contacts': contacts}
+#    return render(request, 'workorders/partials/contact-update.html', context)
